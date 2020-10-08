@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js'
+import * as d3 from "d3"
 
 @Component({
   selector: 'pb-homepage',
@@ -8,6 +9,7 @@ import { Chart } from 'chart.js'
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
+  
   
   public dataSource = {
     datasets: [{
@@ -52,5 +54,11 @@ export class HomepageComponent implements OnInit {
         data : this.dataSource
     })
 }
+
+
+
+
+  
+
 
 }
