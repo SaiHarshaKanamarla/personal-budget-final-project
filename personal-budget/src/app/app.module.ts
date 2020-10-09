@@ -16,7 +16,6 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { ContactComponent } from './contact/contact.component';
 import { PieComponent } from './pie/pie.component';
 import { DataService } from './data.service';
-import { Pie2Component } from './pie2/pie2.component';
 
 @NgModule({
   declarations: [
