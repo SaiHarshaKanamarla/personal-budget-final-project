@@ -30,9 +30,7 @@ import { DataService } from './data.service';
     P404Component,
     BreadcrumbsComponent,
     ContactComponent,
-    PieComponent,
-    Pie2Component    
-  ],
+    PieComponent,  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
