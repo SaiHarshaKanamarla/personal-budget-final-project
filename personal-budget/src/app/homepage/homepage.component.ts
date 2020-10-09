@@ -37,8 +37,7 @@ export class HomepageComponent implements OnInit {
   constructor(private http: HttpClient,public _dataService: DataService) { }
 
   ngOnInit(): void {
-    console.log(this._dataService.getData());
-    // Making the subscribe call only when the datasource coming from the dataservice is empty.
+  // Making the subscribe call only when the datasource coming from the dataservice is empty.
     if (this._dataService.dataSource.length > 0){
       for (let i = 0; i < this._dataService.dataSource.length; i++) {
         this.dataSource.datasets[0].data[i] = this._dataService.dataSource[i].budget;
@@ -46,8 +45,7 @@ export class HomepageComponent implements OnInit {
         this.createChart();
       }
     } else {
-    this._dataService.getData().subscribe((data: any) => {
-      console.log(data.length);
+    this._dataService.getData().subscribe((data: any) => {     
       for (let i = 0; i < data.length; i++) {
         this.dataSource.datasets[0].data[i] = data[i].budget;
         this.dataSource.labels[i] = data[i].title;
