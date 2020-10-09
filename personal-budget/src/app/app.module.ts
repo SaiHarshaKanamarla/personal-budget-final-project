@@ -14,7 +14,8 @@ import { LoginComponent } from './login/login.component';
 import { P404Component } from './p404/p404.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { ContactComponent } from './contact/contact.component';
-import { ChartsModule } from 'ng2-charts';
+import { PieComponent } from './pie/pie.component';
+import { DataService } from './data.service';
 
 @NgModule({
   declarations: [
@@ -28,15 +29,15 @@ import { ChartsModule } from 'ng2-charts';
     LoginComponent,
     P404Component,
     BreadcrumbsComponent,
-    ContactComponent
+    ContactComponent,
+    PieComponent    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    ChartsModule
+    HttpClientModule
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
