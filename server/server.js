@@ -17,11 +17,6 @@ app.get('/budget',(req,res)=>{
     res.json(sampleData);    
 })
 
-var d3data = require('./d3data.json');
-app.get('/data',(req,res)=>{
-    console.log(d3data);
-    res.send(d3data);
-})
 
 app.listen(port,()=>{
     console.log("App is running on port "+port);

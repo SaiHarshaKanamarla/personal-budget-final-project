@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
-
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -22,16 +22,23 @@ export class PieComponent implements OnInit {
     private colors;
 
 
-    constructor(private _dataService : DataService) { }
+    constructor(public _dataService : DataService, private http: HttpClient) { }
 
     ngOnInit(): void {
-      this._dataService.getData().subscribe(data => {
+      if (this._dataService.dataSource.length > 0){
+        this.data = this._dataService.dataSource;
+        this.createSvg();
+        this.createColors();
+        this.drawChart();
+      } else {
+      this._dataService.getData().subscribe((data: any) => {
         this.data = data;
         this.createSvg();
         this.createColors();
-        this.drawChart(); 
-      });                    
+        this.drawChart();
+      });                   
     }
+  }
 
     private createSvg(): void {      
       this.svg = d3.select("figure#pie")
@@ -47,13 +54,18 @@ export class PieComponent implements OnInit {
   
     private createColors(): void {
       this.colors = d3.scaleOrdinal()
-      .domain(this.data.map(d => d.Stars.toString()))
-      .range(["#32a852", "#e2f53d", "#cf2727", "#27cfbb", "#cf27cc"]);
+      .domain(this.data.map(d => d.budget.toString()))
+      .range(["#32a852", "#e2f53d", "#cf2727", "#27cfbb", "#cf27cc","#0d10a8","#ff7700","#916556"]);
+    }
+
+    private angle(d) {
+      const a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+      return a > 90 ? a - 180 : a;
     }
   
     private drawChart(): void {
       // Compute the position of each group on the pie:
-      const pie = d3.pie<any>().value((d: any) => Number(d.Stars));
+      const pie = d3.pie<any>().value((d: any) => Number(d.budget));
   
       // Build the pie chart
       this.svg
@@ -79,7 +91,7 @@ export class PieComponent implements OnInit {
       .data(pie(this.data))
       .enter()
       .append('text')
-      .text(d => d.data.Framework)
+      .text(d => d.data.title)
       .attr("transform", d => "translate(" + labelLocation.centroid(d) + ")")
       .style("text-anchor", "middle")
       .style("font-size", 15);

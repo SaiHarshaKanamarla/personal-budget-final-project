@@ -10,11 +10,12 @@ export class DataService {
   
   constructor(private http: HttpClient) { }
 
-  //private _url = "assets/d3data.json"
-  private _url = "http://localhost:3000/data";
+  dataSource =  []; // This is populated when empty by making a get call as below
 
-  getData() : Observable<Id3data[]>{  
-    return this.http.get<Id3data[]>(this._url)      
+  private _url = "http://localhost:3000/budget";
+
+  getData(){
+    return this.http.get(this._url);
   }
 
 }
