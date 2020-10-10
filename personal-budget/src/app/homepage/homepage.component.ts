@@ -46,7 +46,7 @@ export class HomepageComponent implements OnInit {
       }
     } else {
     this._dataService.getData().subscribe((data: any) => {     
-      this._dataService.dataSource = data;
+      this._dataService.dataSource = data; // populating the dataSource variable so that it is read the next time
       for (let i = 0; i < data.length; i++) {
         this.dataSource.datasets[0].data[i] = data[i].budget;
         this.dataSource.labels[i] = data[i].title;

@@ -33,7 +33,7 @@ export class PieComponent implements OnInit {
       } else {
       this._dataService.getData().subscribe((data: any) => {
         this.data = data;
-        this._dataService.dataSource = data;
+        this._dataService.dataSource = data; // populating the dataSource variable so that it is read the next time
         this.createSvg();
         this.createColors();
         this.drawChart();
