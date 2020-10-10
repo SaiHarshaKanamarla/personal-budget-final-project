@@ -37,10 +37,10 @@ export class HomepageComponent implements AfterViewInit {
   constructor(private http: HttpClient,public _dataService: DataService) { }
 
   ngAfterViewInit(): void {
-  // Making the subscribe call only when the datasource coming from the dataservice is empty.
+  // Making the subscribe call for the first pie chart. Here the value is fetched from data source. 
+  //The data.service file has the handling for the API call.
   this._dataService.getData()
   .subscribe((res: any) => {
-    // this.dataService.dataArray = res;
     for (let i = 0; i < res.myBudget.length; i++) {
      this.dataSource.datasets[0].data[i] = res.myBudget[i].budget;
      this.dataSource.labels[i] = res.myBudget[i].title;
