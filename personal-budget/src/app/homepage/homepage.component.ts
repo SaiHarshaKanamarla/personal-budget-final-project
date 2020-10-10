@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js'
 import * as D3 from 'd3';
@@ -9,7 +9,7 @@ import { DataService } from '../data.service';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements AfterViewInit {
   
   public dataSource = {
     datasets: [{
@@ -36,24 +36,17 @@ export class HomepageComponent implements OnInit {
 
   constructor(private http: HttpClient,public _dataService: DataService) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
   // Making the subscribe call only when the datasource coming from the dataservice is empty.
-    if (this._dataService.dataSource.length > 0){
-      for (let i = 0; i < this._dataService.dataSource.length; i++) {
-        this.dataSource.datasets[0].data[i] = this._dataService.dataSource[i].budget;
-        this.dataSource.labels[i] = this._dataService.dataSource[i].title;
-        this.createChart();
-      }
-    } else {
-    this._dataService.getData().subscribe((data: any) => {     
-      this._dataService.dataSource = data; // populating the dataSource variable so that it is read the next time
-      for (let i = 0; i < data.length; i++) {
-        this.dataSource.datasets[0].data[i] = data[i].budget;
-        this.dataSource.labels[i] = data[i].title;
-        this.createChart();
-      }
-    });
-  }
+  this._dataService.getData()
+  .subscribe((res: any) => {
+    // this.dataService.dataArray = res;
+    for (let i = 0; i < res.myBudget.length; i++) {
+     this.dataSource.datasets[0].data[i] = res.myBudget[i].budget;
+     this.dataSource.labels[i] = res.myBudget[i].title;
+     this.createChart();
+    }
+  });
   }
 
   createChart(){

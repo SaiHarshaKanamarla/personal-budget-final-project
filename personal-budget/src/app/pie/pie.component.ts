@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './pie.component.html',
   styleUrls: ['./pie.component.scss']
 })
-export class PieComponent implements OnInit {
+export class PieComponent implements AfterViewInit {
 
     public data = []
 
@@ -24,22 +24,15 @@ export class PieComponent implements OnInit {
 
     constructor(public _dataService : DataService, private http: HttpClient) { }
 
-    ngOnInit(): void {
-      if (this._dataService.dataSource.length > 0){
-        this.data = this._dataService.dataSource;
+    ngAfterViewInit(): void {
+      this._dataService.getData()
+      .subscribe((res: any) => {   // making a subscribe call to fetch data.
+        this.data = res.myBudget;
         this.createSvg();
         this.createColors();
         this.drawChart();
-      } else {
-      this._dataService.getData().subscribe((data: any) => {
-        this.data = data;
-        this._dataService.dataSource = data; // populating the dataSource variable so that it is read the next time
-        this.createSvg();
-        this.createColors();
-        this.drawChart();
-      });                   
+      });
     }
-  }
 
     private createSvg(): void {      
       this.svg = d3.select("figure#pie")
