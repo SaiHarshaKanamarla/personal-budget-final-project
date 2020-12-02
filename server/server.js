@@ -41,6 +41,26 @@ app.get('/budget',(req,res)=>{
             })   
 })
 
+app.post('/budget',(req,res)=>{
+    console.log("inside post");
+    console.log(req.body);
+    let data = {id: req.body._id, title: req.body.title, budget: req.body.budget, color: req.body.color,maxbudget: req.body.maxbudget}
+    mongoose.connect(url,{useNewUrlParser: true, useUnifiedTopology: true})
+            .then(()=>{
+                console.log("Connection to the database is established");
+                budgetModel.insertMany(data,(err,data)=>{
+                    if(err){
+                        console.log(err);      
+                        res.send(err);
+                        mongoose.connection.close();
+                    }else{
+                        console.log("insert successful"); 
+                        res.send(data);    
+                        mongoose.disconnect();
+                    }                    
+                })                              
+})
+});
 
 app.listen(port,()=>{
     console.log("App is running on port "+port);
