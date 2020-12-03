@@ -14,16 +14,7 @@ export class HomepageComponent implements AfterViewInit {
   public dataSource = {
     datasets: [{
         data: [],
-        backgroundColor : [
-            '#ffcd56',
-            '#ff6384',
-            '#40E82F',
-            '#6E453C',
-            '#23rvfs',
-            '#6324EA',
-            '#A9256B',
-            '#0BF0E8',
-            '#F0FF00'
+        backgroundColor : [           
         ]
     }],
 
@@ -41,9 +32,11 @@ export class HomepageComponent implements AfterViewInit {
   //The data.service file has the handling for the API call.
   this._dataService.getData()
   .subscribe((res: any) => {
-    for (let i = 0; i < res.myBudget.length; i++) {
-     this.dataSource.datasets[0].data[i] = res.myBudget[i].budget;
-     this.dataSource.labels[i] = res.myBudget[i].title;
+    console.log(res);
+    for (let i = 0; i < res.length; i++) {
+     this.dataSource.datasets[0].data[i] = res[i].budget;
+     this.dataSource.labels[i] = res[i].title;
+     this.dataSource.datasets[0].backgroundColor[i] = res[i].color;
      this.createChart();
     }
   });

@@ -27,7 +27,8 @@ export class PieComponent implements AfterViewInit {
     ngAfterViewInit(): void {
       this._dataService.getData()
       .subscribe((res: any) => {   // making a subscribe call to fetch data.
-        this.data = res.myBudget;
+        console.log(res);
+        this.data = res;
         this.createSvg();
         this.createColors();
         this.drawChart();
