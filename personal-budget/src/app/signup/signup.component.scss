@@ -22,7 +22,7 @@
 
 h2 {
   margin-top: 0px;
-  text-align: center;
+  margin-left: 0%;
 }
 
 button {
@@ -50,4 +50,23 @@ section {
   align-items: center;
   display: block;
   margin: 0 auto;
+}
+
+label {
+  font-size: large;
+}
+
+#username {
+  width: 80%;
+  height: 23px;
+}
+
+#password {
+  width: 80%;
+  height: 23px;
+}
+
+#email {
+  width: 80%;
+  height: 23px;
 }
