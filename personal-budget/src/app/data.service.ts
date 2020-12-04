@@ -10,6 +10,7 @@ import { shareReplay, takeUntil } from 'rxjs/operators';
 export class DataService {
 
   DataObservable: Observable<any>;
+  UserObservable : Observable<any>;
   
   constructor(private http: HttpClient) { }
   
@@ -23,6 +24,15 @@ export class DataService {
     } else {
       this.DataObservable = this.http.get('http://localhost:3000/budget').pipe(shareReplay());
       return this.DataObservable;
+    }
+  }
+
+  getUsers() : Observable<any>{
+    if(this.UserObservable){
+      return this.UserObservable;
+    }else{
+      this.UserObservable = this.http.get('http://locahost:3000/users').pipe(shareReplay());
+      return this.UserObservable;
     }
   }
   }
