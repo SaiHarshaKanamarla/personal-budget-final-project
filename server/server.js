@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose  = require('mongoose');
 const bodyParser = require('body-parser');
 const budgetModel = require('./models/budgetModel');
+const userModel = require('./models/userModel');
 const port = 3000;
 
 
@@ -22,9 +23,7 @@ app.get('/hello',(req,res)=>{
 // var sampleData = require('./sampleData.json');
 
 
-app.get('/budget',(req,res)=>{
-    // console.log(sampleData);
-    // res.json(sampleData); 
+app.get('/budget',(req,res)=>{     
     mongoose.connect(url,{useNewUrlParser: true, useUnifiedTopology: true})
             .then(()=>{
                 console.log("Connection to the database is established");
@@ -61,6 +60,44 @@ app.post('/budget',(req,res)=>{
                 })                              
 })
 });
+
+app.get('/users',(req,res)=>{
+    mongoose.connect(url,{useNewUrlParser: true, useUnifiedTopology: true})
+            .then(()=>{
+                console.log("Connection to the database is established");
+                userModel.find({})
+                           .then((data)=>{
+                               console.log(data);
+                               res.status(200).send(data);
+                               mongoose.connection.close();
+                           })
+                           .catch((err)=>{
+                               console.log(err);
+                               res.status(500).send();
+                           })
+            })
+})
+
+app.post('/users',(req,res)=>{
+    console.log("inside post");
+    console.log(req.body);
+    let data = {id: req.body._id, username: req.body.username, password: req.body.password, email: req.body.email}
+    mongoose.connect(url,{useNewUrlParser: true, useUnifiedTopology: true})
+            .then(()=>{
+                console.log("Connection to the database is established");
+                userModel.insertMany(data,(err,data)=>{
+                    if(err){
+                        console.log(err);      
+                        res.send(err);
+                        mongoose.connection.close();
+                    }else{
+                        console.log("insert successful"); 
+                        res.send(data);    
+                        mongoose.disconnect();
+                    }                    
+                })                              
+})
+})
 
 app.listen(port,()=>{
     console.log("App is running on port "+port);

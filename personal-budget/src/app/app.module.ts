@@ -17,6 +17,7 @@ import { ContactComponent } from './contact/contact.component';
 import { PieComponent } from './pie/pie.component';
 import { DataService } from './data.service';
 import { SignupComponent } from './signup/signup.component';
+import { HometableComponent } from './hometable/hometable.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SignupComponent } from './signup/signup.component';
     BreadcrumbsComponent,
     ContactComponent,
     PieComponent,
-    SignupComponent,  ],
+    SignupComponent,
+    HometableComponent,  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
