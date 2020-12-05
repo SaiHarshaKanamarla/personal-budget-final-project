@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'pb-contact',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -18,5 +19,13 @@ export class ContactComponent implements OnInit {
 
   feedBackProcess(data){
     console.log(data);
+    const url = "http://localhost:3000/feedback";
+    this.http.post(url,{
+      username : data.username,
+      description: data.description,
+      email : data.email
+    }).toPromise().then((data:any)=>{
+        console.log(data);
+    })
   }
 }
