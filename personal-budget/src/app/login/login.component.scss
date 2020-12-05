@@ -1,14 +1,12 @@
-#mainbody {
-  height: 150%;
-}
+// #mainbody {
+//   height: 250%;
+// }
 
 #main {
-  padding: 50px;
-  margin-left: 40%;
-  display: flex;
-  align-content: center;
-  background-color: #b4c6f0;
-  width: 20%;
+  display: grid;
+  align-items: center;
+  margin-left: 30%;
+  margin-bottom: 20%;
 }
 
 #login {
@@ -31,7 +29,6 @@ label {
 }
 
 button {
-  width: 30%;
   height: 30px;
   align-content: center;
   color: white;
@@ -39,14 +36,53 @@ button {
   font-family: Georgia, "Times New Roman", Times, serif;
   margin: 5px;
   border-radius: 4px;
+  width: 20%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
 }
 
 #username {
-  width: 80%;
+  width: 50%;
   height: 23px;
 }
 
 #password {
-  width: 80%;
+  width: 50%;
   height: 23px;
+}
+
+.registerbtn {
+  background-color: #4caf50;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  opacity: 0.9;
+  margin: 5px;
+  text-align: center;
+}
+
+.registerbtn:hover {
+  opacity: 2;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 20%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  background-color: #ddd;
+  outline: none;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from '../data.service';
 
 
 @Component({
@@ -9,9 +10,13 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,public _dataService: DataService) { }
 
   ngOnInit(): void {
+  }
+
+  getValues(val){
+    console.log(val)
   }
 
   signuppage(){
@@ -19,7 +24,12 @@ export class LoginComponent implements OnInit {
   }
 
   homepage(){
-    this.router.navigate(['/homepage'])
+    this._dataService.getUsers()
+    .subscribe((res:any)=>{
+      console.log(res);
+      
+    })
+    //this.router.navigate(['/homepage'])        
   }
 
 }

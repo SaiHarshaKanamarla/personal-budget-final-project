@@ -1,25 +1,24 @@
 <div class="container-fluid" id="mainbody">
     <h1 class="row" id="login">Login to view your expenses</h1>
 
-    <div id ="main">
-    <main>
+    <div>
+    <form #simpleform="ngForm" (ngSubmit)="getValues(simpleform.value)">
+    <main id="main">
         <div class="row col-xs-4">
             <label for="username">Username: </label>
-            <input type="text" name="username" id="username">            
+            <input type="text" ngModel name="username" id="username">            
         </div>
         <br>
         <div class="row">
             <label for="password">Password:  </label>
-            <input type="password" name="password" id="password">            
+            <input type="password" ngModel name="password" id="password">            
         </div>
         <br>
         <div>
-            <button class="btn btn-primary" (click)="homepage()">Login</button>
-            <button class="btn btn-primary" (click)="signuppage()">Signup</button>
-            <!-- <button onclick="login()">Login</button>
-            <button onclick="getDashboard()">get Dashboard</button>
-            <button onclick="getSettings()">get Settings</button> -->
+            <button class="registerbtn" (click)="homepage()">Login</button>
+            <button class="registerbtn" (click)="signuppage()">Signup</button>           
         </div>
     </main>
+    </form>
     </div>
 </div>

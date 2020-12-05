@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -27,6 +28,9 @@ export class SignupComponent implements OnInit {
       email : data.email
     }).toPromise().then((data:any)=>{
         console.log(data);
+        console.log("Registration Successful");
+        this.router.navigate(['/login'])
+
     })
   }
 

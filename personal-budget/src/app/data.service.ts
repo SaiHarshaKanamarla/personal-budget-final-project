@@ -31,7 +31,7 @@ export class DataService {
     if(this.UserObservable){
       return this.UserObservable;
     }else{
-      this.UserObservable = this.http.get('http://locahost:3000/users').pipe(shareReplay());
+      this.UserObservable = this.http.get('http://localhost:3000/users').pipe(shareReplay());
       return this.UserObservable;
     }
   }
