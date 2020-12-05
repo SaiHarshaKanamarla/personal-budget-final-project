@@ -12,4 +12,11 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getValues(val){
+    console.log(val);
+  }
+
+  feedBackProcess(data){
+    console.log(data);
+  }
 }

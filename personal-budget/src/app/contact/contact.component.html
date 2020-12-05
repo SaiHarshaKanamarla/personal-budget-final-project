@@ -1,9 +1,31 @@
-<div id="maincontent" class="main-body">
+<div class="container" id="main">
+    <div class="row">
+        <h1 id="signup">Have issues. You can reach out to us below by providing some info</h1>
+    </div>
+    <div id ="content">
+        <section>
+            <h2>Enter you details here</h2>
+            <form #simpleform="ngForm" (ngSubmit)="getValues(simpleform.value)">
+            <div class="row col-xs-4">
+                <label for="username">Username: </label>
+                <input type="text" ngModel name="username" id="username">            
+            </div>
+            <br>
+            <div class="row">
+                <label for="email">Email:  </label>
+                <input type="email" ngModel name="email" id="email">            
+            </div>
+            <br>
+            <div>
+                <label for="desc"> Description:   </label>          
+                <input type="text" ngModel name="desc" id="desc">
+            </div>
+            <br>
+            <div>
+                <button (click)=feedBackProcess(simpleform.value)">Send Feedback</button>
+            </div>
+        </form>
 
-<h1>Contact US</h1>
+        </section>
 
-<h3>You an contact us on +1 (280)-493-6561</h3>
-
-<h4><i>If you have any issues, please mail us at charlotte@uncc.edu</i></h4>
-
-</div>
+</div> 

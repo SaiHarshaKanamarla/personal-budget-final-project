@@ -69,7 +69,7 @@ export class PieComponent implements AfterViewInit {
       .enter()
       .append('path')
       .attr('d', d3.arc()
-        .innerRadius(0)
+        .innerRadius(100)
         .outerRadius(this.radius)
       )
       .attr('fill', (d, i) => (this.colors(i)))
