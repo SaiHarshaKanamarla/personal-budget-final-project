@@ -1,15 +1,27 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js'
 import * as D3 from 'd3';
 import { DataService } from '../data.service';
+import { AngularFirestore, AngularFirestoreDocument,AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+
+// interface BudgetSchema{
+//   id: string;
+//   budget: number;
+//   maxbudget: number;
+//   color: string;
+// }
 
 @Component({
   selector: 'pb-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
-export class HomepageComponent implements AfterViewInit {
+export class HomepageComponent implements OnInit {
+
+  // budgetCollection : AngularFirestoreCollection<BudgetSchema>;
+  // budgetData: Observable<BudgetSchema[]>;
   
   public dataSource = {
     datasets: [{
@@ -25,11 +37,11 @@ export class HomepageComponent implements AfterViewInit {
 };
 
 
-  constructor(private http: HttpClient,public _dataService: DataService) { }
+  constructor(private _dataService : DataService) { }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
   // Making the subscribe call for the first pie chart. Here the value is fetched from data source. 
-  //The data.service file has the handling for the API call.
+  // The data.service file has the handling for the API call.
   this._dataService.getData()
   .subscribe((res: any) => {
     console.log(res);
@@ -40,8 +52,18 @@ export class HomepageComponent implements AfterViewInit {
      this.createChart();
     }
   });
-  }
+    // this._dataService.getData()
+    // .subscribe(res =>{
+    //   console.log(res);
+    // })
 
+    // this.budgetCollection = this.afs.collection('budget');
+    // this.budgetData = this.budgetCollection.valueChanges();
+
+
+
+  }
+  
   createChart(){
     var ctx : any = document.getElementById("myChart")
     var myPieChart = new Chart(ctx,{

@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   homepage(){
-    this._dataService.getUsers()
+    this._dataService.getData()
     .subscribe((res:any)=>{
       console.log(res);
       
