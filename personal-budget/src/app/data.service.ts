@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument,AngularFirestoreCollection }
 import { getLocaleDateFormat } from '@angular/common';
 //import { Data } from '@angular/router';
 import { BudgetSchema } from '../app/models/budget';
+import { FeedbackSchema } from './models/feedback';
 
 
 @Injectable({
@@ -19,6 +20,9 @@ export class DataService {
   budgetCollection : AngularFirestoreCollection<BudgetSchema>;
   budgetData: Observable<BudgetSchema[]>;
 
+  feedbackCollection : AngularFirestoreCollection<FeedbackSchema>;
+  feedbackData : Observable<FeedbackSchema[]>
+
   
   constructor(public afs: AngularFirestore) {
     // this.budgetCollection = afs.collection<BudgetSchema>('budgetData');
@@ -26,10 +30,17 @@ export class DataService {
     //this.budgetData = this.afs.collection('budgetData').valueChanges();
     this.budgetCollection = this.afs.collection('budget');
     this.budgetData = this.budgetCollection.valueChanges();
+
+    this.feedbackCollection = this.afs.collection('feedback');
+    this.feedbackData = this.feedbackCollection.valueChanges();
   }
     
   getData(){
     return this.budgetData;
+  }
+
+  getFeedbackData(){
+    return this.feedbackData;
   }
   
   }

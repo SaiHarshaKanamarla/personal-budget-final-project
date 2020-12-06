@@ -10,18 +10,39 @@ import { Chart } from 'chart.js'
 })
 export class DualbarComponent implements OnInit {
 
-  public dataSource = {
-    datasets: [{        
-        data:[],
-        backgroundColor : [           
-        ]
-    }],
+  
+  title = 'Bar Chart Example in Angular 4';
 
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-        
-    ]
-};
+  chartOptions = {
+    responsive: true    
+  }
+
+  labels = [];
+
+  chartData = [
+    {
+      label: 'Current Budget',
+      data: []  // load budget values
+    },
+    { 
+      label: 'Maximum Budget',
+      data: [] // load maximum budget values
+    }
+  ];
+
+  colors = [
+    { 
+      backgroundColor: 'rgba(77,83,96,0.2)'
+    },
+    { 
+      backgroundColor: 'rgba(30, 169, 224, 0.8)'
+    }
+  ]
+
+  onChartClick(event) {
+    console.log(event);
+  }
+
 
   constructor(private http: HttpClient,public _dataService: DataService) { }
 
@@ -30,38 +51,31 @@ export class DualbarComponent implements OnInit {
     //The data.service file has the handling for the API call.
     this._dataService.getData()
     .subscribe((res: any) => {
-      console.log(res);
+      console.log(res[0]);
       for (let i = 0; i < res.length; i++) {
+
+        this.chartData[0].data[i] = res[i].budget;
+        this.chartData[1].data[i] = res[i].maxbudget;
+        this.labels[i] = res[i].title;
        //this.dataSource.datasets[0].data_budget[i] = res[i].budget;
        //this.dataSource.datasets[0].data_maxbudget[i] = res[i].maxbudget;
-       this.dataSource.datasets[0].data = res[i].budget,res[i].maxbudget;
-       this.dataSource.labels[i] = res[i].title;
-       this.dataSource.datasets[0].backgroundColor[i] = res[i].color;
-       this.createChart();
+      //  this.dataSource.datasets[0].chartData[0].data[i] = res[i].maxbudget;
+      //  this.dataSource.datasets[0].chartData[1].data[i] = res[i].budget;
+      //  this.dataSource.labels[i] = res[i].title;
+      //  this.dataSource.datasets[0].backgroundColor[i] = res[i].color;
+       //this.createChart();
       }
     });
     }
         
-    public chartOptions = {
-      scales: {
-        xAxes: [{
-          barPercentage: 1,
-          categoryPercentage: 0.6
-        }],
-        yAxes: [{
-          id: "y-axis-density"
-        }, {
-          id: "y-axis-gravity"
-        }]
-      }
-    };
+    
 
-    createChart(){
-      var ctx : any = document.getElementById("myBar")
-      var myBarChart = new Chart(ctx,{
-          type: 'bar',
-          data : this.dataSource,
-      })
-  }
+  //   createChart(){
+  //     var ctx : any = document.getElementById("myBar")
+  //     var myBarChart = new Chart(ctx,{
+  //         type: 'bar',
+  //         data : this.dataSource,
+  //     })
+  // }
 
 }
