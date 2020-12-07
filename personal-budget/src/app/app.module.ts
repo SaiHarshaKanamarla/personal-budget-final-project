@@ -5,6 +5,8 @@ import { FormsModule }   from '@angular/forms';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import {Toast, ToastrModule } from 'ngx-toastr';
+import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,7 +55,14 @@ import { AddbudgetComponent } from './addbudget/addbudget.component'
     AppRoutingModule,
     HttpClientModule,
     ChartsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      preventDuplicates: true      
+    })
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
