@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Data } from '@angular/router';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'pb-contact',
@@ -8,7 +10,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ContactComponent implements OnInit {
 
-  constructor(private http:HttpClient) { }
+  username:string;
+  email:string;
+  description:string
+
+
+  constructor(public _dataService: DataService) { }
 
   ngOnInit(): void {
   }
@@ -17,15 +24,20 @@ export class ContactComponent implements OnInit {
     console.log(val);
   }
 
-  feedBackProcess(data){
-    console.log(data);
-    const url = "http://localhost:3000/feedback";
-    this.http.post(url,{
-      username : data.username,
-      description: data.description,
-      email : data.email
-    }).toPromise().then((data:any)=>{
-        console.log(data);
-    })
+  sendFeedback(){
+    let record = {};
+
+    record['username'] = this.username;
+    record['email'] = this.email;
+    record['description'] = this.description;
+
+    this._dataService.createNewFeedBack(record).then(res => {
+      this.username = "";
+      this.email = "";
+      this.description = "";
+      console.log(res);
+    }).catch(error => {
+      console.log(error);
+    });
   }
 }

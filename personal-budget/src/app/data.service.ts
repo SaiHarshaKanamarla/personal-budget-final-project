@@ -8,6 +8,7 @@ import { getLocaleDateFormat } from '@angular/common';
 import { BudgetSchema } from '../app/models/budget';
 import { FeedbackSchema } from './models/feedback';
 import { UserSchema } from './models/users';
+import { tickStep } from 'd3';
 
 
 @Injectable({
@@ -41,6 +42,8 @@ export class DataService {
     this.userCollection = this.afs.collection('users');
     this.userData = this.userCollection.valueChanges();
 
+
+
   }
     
   getData(){
@@ -55,6 +58,10 @@ export class DataService {
     return this.userData;
   }
   
+  createNewFeedBack(record){
+    return this.afs.collection('feedback').add(record);
+  }
+
   }
 
   

@@ -10,9 +10,6 @@ import { Chart } from 'chart.js'
 })
 export class DualbarComponent implements OnInit {
 
-  
-  title = 'Bar Chart Example in Angular 4';
-
   chartOptions = {
     responsive: true    
   }
@@ -32,10 +29,10 @@ export class DualbarComponent implements OnInit {
 
   colors = [
     { 
-      backgroundColor: 'rgba(77,83,96,0.2)'
+      backgroundColor: 'rgb(128, 0, 0)'
     },
     { 
-      backgroundColor: 'rgba(30, 169, 224, 0.8)'
+      backgroundColor: 'rgba(0, 118, 255, 0.8)'
     }
   ]
 

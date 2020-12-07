@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js'
 import * as D3 from 'd3';
 import { DataService } from '../data.service';
-import { AngularFirestore, AngularFirestoreDocument,AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 
 // interface BudgetSchema{
 //   id: string;
