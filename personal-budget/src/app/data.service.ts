@@ -62,6 +62,10 @@ export class DataService {
     return this.afs.collection('feedback').add(record);
   }
 
+  createNewBudget(record){
+    return this.afs.collection('budget').add(record);
+  }
+
   }
 
   

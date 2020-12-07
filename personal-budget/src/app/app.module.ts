@@ -24,7 +24,8 @@ import { SignupComponent } from './signup/signup.component';
 import { HometableComponent } from './hometable/hometable.component';
 import { ChartsModule } from 'ng2-charts';
 import { DualbarComponent } from './dualbar/dualbar.component';
-import { LineChartComponent } from './line-chart/line-chart.component'
+import { LineChartComponent } from './line-chart/line-chart.component';
+import { AddbudgetComponent } from './addbudget/addbudget.component'
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { LineChartComponent } from './line-chart/line-chart.component'
     SignupComponent,
     HometableComponent,
     DualbarComponent,
-    LineChartComponent,  ],
+    LineChartComponent,
+    AddbudgetComponent,  ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

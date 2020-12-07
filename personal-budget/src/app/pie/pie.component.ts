@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './pie.component.html',
   styleUrls: ['./pie.component.scss']
 })
-export class PieComponent implements AfterViewInit {
+export class PieComponent implements OnInit {
 
     public data = []
 
@@ -24,7 +24,7 @@ export class PieComponent implements AfterViewInit {
 
     constructor(public _dataService : DataService, private http: HttpClient) { }
 
-    ngAfterViewInit(): void {
+    ngOnInit(): void {
       this._dataService.getData()
       .subscribe((res: any) => {   // making a subscribe call to fetch data.
         console.log(res);
