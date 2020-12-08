@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'pb-login',
@@ -10,26 +10,51 @@ import { DataService } from '../data.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router,public _dataService: DataService) { }
+  public userData = [];
+  username:string
+  password:string
+
+  constructor(private router: Router,public _dataService: DataService,private toastr: ToastrService) {
+      this._dataService.getUserData()
+      .subscribe((res:any)=>{
+        res.forEach(element => {
+          this.userData.push(element);
+        });
+      });
+      console.log(this.userData);
+      
+   }
 
   ngOnInit(): void {
   }
 
   getValues(val){
-    console.log(val)
+    console.log(val);
   }
 
   signuppage(){
-    this.router.navigate(['/signup'])
+    this.router.navigate(['/signup']);
+  }
+
+  loginSuccessful(){
+    this.toastr.success('Logged In','Success');
+  }
+
+  loginFailure(){
+    this.toastr.error('Invalid Credentials','Failure');
   }
 
   homepage(){
-    this._dataService.getData()
-    .subscribe((res:any)=>{
-      console.log(res);
-      
-    })
-    //this.router.navigate(['/homepage'])        
+    for(let i=0;i<this.userData.length;i++){
+      if(this.username == this.userData[i].username && this.password == this.userData[i].password){
+        console.log("User exists so you can login");
+        this.loginSuccessful();
+        this.router.navigate(['/homepage']);
+        return;
+      }
+    }    
+    console.log("User validation failed");
+    this.loginFailure();
   }
 
 }
