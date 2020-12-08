@@ -16,15 +16,26 @@ export class SignupComponent implements OnInit {
   password:string;
   email:string
 
-  public duplicate = false;
-  constructor(private http:HttpClient,private router:Router,public _dataService: DataService, private toastr: ToastrService) { }
+  public userData = [];
+
+  
+  constructor(private http:HttpClient,private router:Router,public _dataService: DataService, private toastr: ToastrService) { 
+    this._dataService.getUserData()
+    .subscribe((res:any)=>{
+      //console.log(res);
+      res.forEach(element => {
+        //console.log(element)
+        this.userData.push(element)        
+      });
+    })
+  }
 
   ngOnInit(): void {
   }
 
-  getValues(val){
-    console.log(val);
-  }
+  // getValues(val){
+  //   console.log(val);
+  // }
 
   triggertoast(){
     this.toastr.error('some message');
@@ -43,18 +54,14 @@ export class SignupComponent implements OnInit {
     record['username'] = this.username;
     record['password'] = this.password;    
     record['email'] = this.email;
-
-    this._dataService.getUserData()
-    .subscribe((res:any)=>{
-      console.log(res);
-      res.forEach(element => {
-        console.log(element)
-        if(element.username == this.username){
-          console.log("Duplicate exists");
-          this.duplicate = true;          
-        }
-      });
-    })
+    console.log(this.userData);
+    for(let i=0;i<this.userData.length;i++){
+      if(this.userData[i].username == this.username){
+        console.log("There exists a user with same username");
+        this.duplicateUserName();
+        return;
+      }
+    }
 
     this.registrationProcess();
   }
@@ -65,8 +72,7 @@ export class SignupComponent implements OnInit {
     record['username'] = this.username;
     record['password'] = this.password;    
     record['email'] = this.email;
-
-    if(this.duplicate){
+    
       console.log("Valid user");
       this._dataService.addNewUser(record).then(res =>{
           this.username = "";
@@ -75,14 +81,6 @@ export class SignupComponent implements OnInit {
           this.createSuccessfull();
           this.router.navigate(['/login']);
       })
-    }else{
-          console.log("Duplicate hit");
-          this.duplicateUserName();
-          this.duplicate = false;
-          this.username = "";
-          this.password = "";
-          this.email = "";
-  }        
-  }
+    }    
 
 }

@@ -5,7 +5,7 @@
     <div id ="content">
         <section>
             <h2>Enter you details here</h2>
-            <form #simpleform="ngForm" (ngSubmit)="getValues(simpleform.value)">
+            <form #simpleform="ngForm">
             <div class="row col-xs-4">
                 <label for="username">Username: </label>
                 <input type="text" [(ngModel)]="username" name="username" id="username">            
