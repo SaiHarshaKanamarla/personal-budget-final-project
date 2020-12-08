@@ -66,6 +66,10 @@ export class DataService {
     return this.afs.collection('budget').add(record);
   }
 
+  addNewUser(record){
+    return this.afs.collection('users').add(record);
+  }
+
   }
 
   

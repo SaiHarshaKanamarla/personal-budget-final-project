@@ -12,6 +12,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SignupComponent implements OnInit {
 
+  username:string;
+  password:string;
+  email:string
+
+  public duplicate = false;
   constructor(private http:HttpClient,private router:Router,public _dataService: DataService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -29,24 +34,55 @@ export class SignupComponent implements OnInit {
     this.toastr.warning('User already exists. Please proceed to login','Existing User?');
   }
 
-  registrationProcess(data){
-    console.log(data);    
-    if(!data.username || !data.password || !data.email){
-      alert("Invalid details");
-      return;
-    }
-    else{
-      this._dataService.getData()
-      .subscribe((res:any)=>{
-        res.forEach(element => {
-          if(element.username == data.username){
-            //alert("Username already exists. Please proceed to login page");
-            return;
-          }
-        });
+  createSuccessfull(){
+    this.toastr.success('User creation successful. Login with these credentials','Success');
+  }
+
+  duplicateCheck(){
+    let record = {};
+    record['username'] = this.username;
+    record['password'] = this.password;    
+    record['email'] = this.email;
+
+    this._dataService.getUserData()
+    .subscribe((res:any)=>{
+      console.log(res);
+      res.forEach(element => {
+        console.log(element)
+        if(element.username == this.username){
+          console.log("Duplicate exists");
+          this.duplicate = true;          
+        }
+      });
+    })
+
+    this.registrationProcess();
+  }
+
+  registrationProcess(){
+    //this.duplicateCheck();
+    let record = {};
+    record['username'] = this.username;
+    record['password'] = this.password;    
+    record['email'] = this.email;
+
+    if(this.duplicate){
+      console.log("Valid user");
+      this._dataService.addNewUser(record).then(res =>{
+          this.username = "";
+          this.password = "";
+          this.email = "";
+          this.createSuccessfull();
+          this.router.navigate(['/login']);
       })
-    }
-    
+    }else{
+          console.log("Duplicate hit");
+          this.duplicateUserName();
+          this.duplicate = false;
+          this.username = "";
+          this.password = "";
+          this.email = "";
+  }        
   }
 
 }
