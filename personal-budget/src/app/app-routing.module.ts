@@ -38,6 +38,10 @@ const routes: Routes = [
     pathMatch : 'full'
   },
   {
+    path:'logout',
+    component: LoginComponent
+  },
+  {
     path:'**',
     component: P404Component
   }

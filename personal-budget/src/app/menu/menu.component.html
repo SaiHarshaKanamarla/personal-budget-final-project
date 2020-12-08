@@ -4,6 +4,7 @@
         <li><a [routerLink]="['/homepage']" title="Visit our HomePage">HomePage</a></li>        
         <li><a [routerLink]="['/about']" tabindex=-1 title="Visit the About Page">About</a></li>
         <li><a [routerLink]="['/login']" tabindex=-1 title="Login to Your Account">Login</a></li>  
-        <li><a [routerLink]="['/contact']" tabindex=-1 title="You can Contact US">Contact</a></li>                
+        <li><a [routerLink]="['/contact']" tabindex=-1 title="You can Contact US">Contact</a></li>  
+        <li id="logoutElement" [style.visibility]="loggedin ? 'visible' : 'hidden'"><a [routerLink]="['/logout']" tabindex=-1 title="Logout">Logout</a></li>
     </ul>
 </nav>
