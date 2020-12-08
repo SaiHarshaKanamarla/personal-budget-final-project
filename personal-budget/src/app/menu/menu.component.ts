@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {GlobalConstants} from '../app.global';
 
 @Component({
   selector: 'pb-menu',
@@ -7,11 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  public loggedin = true;
+  public loggedin;
 
-  constructor() { }
+  constructor() {    
+   }
 
   ngOnInit(): void {
+    this.loggedin = GlobalConstants.loggedStatus; 
+    console.log(this.loggedin);
   }
 
 }

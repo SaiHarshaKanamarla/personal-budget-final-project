@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
-
+import {GlobalConstants} from '../app.global';
 @Component({
   selector: 'pb-login',
   templateUrl: './login.component.html',
@@ -49,7 +49,12 @@ export class LoginComponent implements OnInit {
       if(this.username == this.userData[i].username && this.password == this.userData[i].password){
         console.log("User exists so you can login");
         this.loginSuccessful();
-        this.router.navigate(['/homepage']);
+        GlobalConstants.loggedStatus = true;
+        console.log(GlobalConstants.loggedStatus);
+        this.router.navigateByUrl('/MenuComponent', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/homepage']);
+        });
+       // this.router.navigate(['/homepage']);        
         return;
       }
     }    
