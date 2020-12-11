@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose  = require('mongoose');
+const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const budgetModel = require('./models/budgetModel');
 const userModel = require('./models/userModel');
@@ -13,7 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-var url = 'mongodb://localhost:27017/budget-final';
+//var url = 'mongodb://localhost:27017/budget-final';
+var url = 'mongodb+srv://harsha-admin:mkbhd9999@personalbudget.492wy.mongodb.net/budgetdata?retryWrites=true&w=majority';
 app.use('',express.static('public'));
 app.use(cors());
 
@@ -79,13 +81,20 @@ app.get('/users',(req,res)=>{
             })
 })
 
-app.post('/users',(req,res)=>{
-    console.log("inside post");
-    console.log(req.body);
+app.post('/users',async(req,res)=>{
+    //console.log("inside post");
+    //console.log(req.body);
+    let salt = await bcrypt.genSalt(10);
+    req.body.password = await bcrypt.hash(req.body.password,salt);
     let data = {id: req.body._id, username: req.body.username, password: req.body.password, email: req.body.email}
     mongoose.connect(url,{useNewUrlParser: true, useUnifiedTopology: true})
             .then(()=>{
-                console.log("Connection to the database is established");
+
+                let user = userModel.findOne({username : req.body.username});
+                console.log(user);
+                if(user.username){
+                    return res.status(400).send("User already exists. Please create different");
+                }else{                
                 userModel.insertMany(data,(err,data)=>{
                     if(err){
                         console.log(err);      
@@ -96,7 +105,8 @@ app.post('/users',(req,res)=>{
                         res.send(data);    
                         mongoose.disconnect();
                     }                    
-                })                              
+                })     
+            }                         
 })
 })
 

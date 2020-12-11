@@ -19,8 +19,7 @@ const userSchema = mongoose.Schema({
     },
     email :{
         type : String,
-        required : true,
-        unique:true,
+        required : true,        
         match:[/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,"Invalid Email Format"]        
     }
 },{collection : 'users'})
