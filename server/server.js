@@ -22,8 +22,6 @@ const accessTokenKey = 'My super secret key';
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-
 var url = 'mongodb+srv://harsha-admin:mkbhd9999@personalbudget.492wy.mongodb.net/budgetdata?retryWrites=true&w=majority';
 
 mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true })
@@ -31,6 +29,11 @@ mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true,useCreate
     .catch(err => console.error('Something went wrong', err));
 
 
+app.use((req,res,next)=>{
+    res.setHeader('Access-Control-Allow-Origin','http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Headers','Content-type,Authorization');
+    next();
+})    
 
 app.use(express.json());
 app.use('/users', users);    

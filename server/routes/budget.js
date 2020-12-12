@@ -3,6 +3,16 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const budgetModel = require('../models/budgetModel');
+const exjwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
+const cors = require('cors');
+router.use(cors());
+
+const secretKey = 'My super secret key';
+const jwtMW = exjwt({
+    secret : secretKey,
+    algorithms: ['HS256']
+})
 
 router.get('/',(req,res)=>{  
         

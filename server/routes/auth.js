@@ -4,10 +4,13 @@ const bcrypt = require('bcrypt');
 const  User  = require('../models/userModel');
 const express = require('express');
 const router = express.Router();
-const accessTokenKey = 'My super secret key';
-const refreshKey = "Refresh token key"
 const jwt_decode = require('jwt-decode');
 const exjwt = require('express-jwt');
+const cors = require('cors');
+router.use(cors());
+
+const accessTokenKey = 'My super secret key';
+const refreshKey = "Refresh token key"
 
 const jwtMW = exjwt({
     secret: accessTokenKey,
@@ -27,8 +30,8 @@ router.post('/', async (req, res) => {
     if (!validPassword) {
         return res.status(204).send('Incorrect email or password.');
     }
-    const token = jwt.sign({ _id: user._id }, accessTokenKey,{expiresIn:'60s'});
-    const refreshToken = jwt.sign({ _id: user._id }, refreshKey,{expiresIn:'180s'});
+    const token = jwt.sign({ _id: user._id,username: user.username }, accessTokenKey,{expiresIn:'60s'});
+    const refreshToken = jwt.sign({ _id: user._id,username: user.username }, refreshKey,{expiresIn:'180s'});
     loginStatus = true;
     var decoded_token = jwt_decode(token);
     res.status(200).json({

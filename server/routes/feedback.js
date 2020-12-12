@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const feedbackModel = require('../models/feedbackModel');
-
+const cors = require('cors');
+router.use(cors());
 
 router.get('/',(req,res)=>{
     feedbackModel.find({})
