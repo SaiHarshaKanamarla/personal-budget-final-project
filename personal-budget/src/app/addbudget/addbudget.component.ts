@@ -32,14 +32,19 @@ export class AddbudgetComponent implements OnInit {
     record['title'] = this.title.charAt(0).toUpperCase()+this.title.slice(1);
     record['color'] = this.randomColorGen();
 
-    this._dataService.createNewBudget(record).then(res=>{
-      this.budget = null;
-      this.maxbudget = null;
-      this.title = "";
-      console.log(res);
-    }).catch(err =>{
-      console.log(err);
-    })
+    this._dataService.addBudgetdata(record)
+      .subscribe(data =>{
+        console.log(data);
+        this.budget = null;
+        this.maxbudget = null;
+        this.title = "";   
+        this.locationreload();  
+      })             
   }
+
+  
+  locationreload() {          
+      location.reload();    
+    }
 
 }

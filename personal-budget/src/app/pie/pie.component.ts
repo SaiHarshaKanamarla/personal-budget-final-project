@@ -25,7 +25,7 @@ export class PieComponent implements OnInit {
     constructor(public _dataService : DataService, private http: HttpClient) { }
 
     ngOnInit(): void {
-      this._dataService.getData()
+      this._dataService.getBudgetData()
       .subscribe((res: any) => {   // making a subscribe call to fetch data.
         console.log(res);
         this.data = res;

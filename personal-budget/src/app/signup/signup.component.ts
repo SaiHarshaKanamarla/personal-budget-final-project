@@ -20,14 +20,14 @@ export class SignupComponent implements OnInit {
 
   
   constructor(private http:HttpClient,private router:Router,public _dataService: DataService, private toastr: ToastrService) { 
-    this._dataService.getUserData()
-    .subscribe((res:any)=>{
-      //console.log(res);
-      res.forEach(element => {
-        //console.log(element)
-        this.userData.push(element)        
-      });
-    })
+    // this._dataService.getUserData()
+    // .subscribe((res:any)=>{
+    //   //console.log(res);
+    //   res.forEach(element => {
+    //     //console.log(element)
+    //     this.userData.push(element)        
+    //   });
+    // })
   }
 
   ngOnInit(): void {
@@ -74,13 +74,13 @@ export class SignupComponent implements OnInit {
     record['email'] = this.email;
     
       console.log("Valid user");
-      this._dataService.addNewUser(record).then(res =>{
-          this.username = "";
-          this.password = "";
-          this.email = "";
-          this.createSuccessfull();
-          this.router.navigate(['/login']);
-      })
+      // this._dataService.addNewUser(record).then(res =>{
+      //     this.username = "";
+      //     this.password = "";
+      //     this.email = "";
+      //     this.createSuccessfull();
+      //     this.router.navigate(['/login']);
+      // })
     }    
 
 }

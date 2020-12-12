@@ -29,7 +29,7 @@ export class LineChartComponent implements OnInit {
   constructor(private _dataService : DataService) { }
 
   ngOnInit(): void {
-    this._dataService.getData()
+    this._dataService.getBudgetData()
     .subscribe((res:any)=>{
       console.log(res);
       for (let i = 0; i < res.length; i++) {

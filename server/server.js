@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const config = require('config');
 const cors = require('cors');
+app.use(cors());
 const mongoose  = require('mongoose');
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
@@ -37,7 +38,7 @@ app.use('/auth', auth);
 app.use('/budget', budget);
 app.use('/feedback',feedback);
 app.use('',express.static('public'));
-app.use(cors());
+
 
 
 

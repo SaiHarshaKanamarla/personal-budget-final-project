@@ -31,13 +31,13 @@ export class ContactComponent implements OnInit {
     record['email'] = this.email;
     record['description'] = this.description;
 
-    this._dataService.createNewFeedBack(record).then(res => {
-      this.username = "";
-      this.email = "";
-      this.description = "";
-      console.log(res);
-    }).catch(error => {
-      console.log(error);
-    });
+    // this._dataService.createNewFeedBack(record).then(res => {
+    //   this.username = "";
+    //   this.email = "";
+    //   this.description = "";
+    //   console.log(res);
+    // }).catch(error => {
+    //   console.log(error);
+    // });
   }
 }

@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: '',
     component : LoginComponent,
-    pathMatch : 'full'
+    pathMatch : 'full'   
   },
   {
     path : 'about',
@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path : 'login',
-    component: LoginComponent
+    component: LoginComponent,    
   },
   {
     path : 'homepage',

@@ -15,13 +15,13 @@ export class LoginComponent implements OnInit {
   password:string
 
   constructor(private router: Router,public _dataService: DataService,private toastr: ToastrService) {
-      this._dataService.getUserData()
-      .subscribe((res:any)=>{
-        res.forEach(element => {
-          this.userData.push(element);
-        });
-      });
-      console.log(this.userData);
+      // this._dataService.getUserData()
+      // .subscribe((res:any)=>{
+      //   res.forEach(element => {
+      //     this.userData.push(element);
+      //   });
+      // });
+      // console.log(this.userData);
       
    }
 
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginFailure(){
-    this.toastr.error('Invalid Credentials','Failure');
+    this.toastr.error('Invalid Credentials. Please enter valid credentials','Failure');
   }
 
   homepage(){

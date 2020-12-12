@@ -29,7 +29,7 @@ export class HometableComponent implements OnInit {
   constructor(private _dataService: DataService) { }
 
   ngOnInit(): void {
-    this._dataService.getData()
+    this._dataService.getBudgetData()
     .subscribe((res:any)=>{
       this.data = res
       console.log(this.data);
