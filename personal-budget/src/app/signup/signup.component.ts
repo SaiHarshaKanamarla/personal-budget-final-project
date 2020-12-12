@@ -49,6 +49,10 @@ export class SignupComponent implements OnInit {
     this.toastr.success('User creation successful. Login with these credentials','Success');
   }
 
+  incompleteDetails(){
+    this.toastr.warning('Please enter all the fields','Warning');
+  }
+
   duplicateCheck(){
     let record = {};
     record['username'] = this.username;
@@ -72,7 +76,10 @@ export class SignupComponent implements OnInit {
     record['username'] = this.username;
     record['password'] = this.password;    
     record['email'] = this.email;
-        
+      if(!this.username || !this.password || !this.email){
+        this.incompleteDetails();
+        return;
+      }else{
       this._dataService.userSignUp(record)
         .subscribe(res =>{
           this.username = "";
@@ -80,11 +87,10 @@ export class SignupComponent implements OnInit {
           this.email = "";
           this.createSuccessfull();
           this.router.navigate(['/login']);
-
         },
         err =>{
           this.duplicateUserName();
         })
     }    
-
+  }
 }

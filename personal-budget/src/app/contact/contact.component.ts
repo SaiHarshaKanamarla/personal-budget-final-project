@@ -29,13 +29,20 @@ export class ContactComponent implements OnInit {
     this.toastr.success('Feedback Sent Successfully','Success');
   }
 
+  emptyDetails(){
+    this.toastr.warning('Please enter all the fields','Warning');
+  }
+
   sendFeedback(){
     let record = {};
 
     record['username'] = this.username;
     record['email'] = this.email;
     record['description'] = this.description;
-
+    if(!this.username || this.email || this.email){
+      this.emptyDetails();
+      return;
+    }else{
     this._dataService.addFeedbackData(record)
     .subscribe(data =>{
       console.log(data);
@@ -46,6 +53,7 @@ export class ContactComponent implements OnInit {
       //this.locationreload();  
     })  
   }
+}
 
   locationreload() {          
     location.reload();    
