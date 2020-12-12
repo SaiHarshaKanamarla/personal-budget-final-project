@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { shareReplay, takeUntil } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument,AngularFirestoreCollection } from '@angular/fire/firestore';
 import { getLocaleDateFormat } from '@angular/common';
@@ -8,8 +8,7 @@ import { getLocaleDateFormat } from '@angular/common';
 import { BudgetSchema } from '../app/models/budget';
 import { FeedbackSchema } from './models/feedback';
 import { UserSchema } from './models/users';
-import { tickStep } from 'd3';
-
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -29,7 +28,11 @@ export class DataService {
   userCollection : AngularFirestoreCollection<UserSchema>;
   userData : Observable<UserSchema[]>
 
-  constructor(private http: HttpClient) { }
+
+  isUserLoggedIn = new Subject<boolean>();
+
+
+  constructor(private http: HttpClient,public router: Router) { }
   // An if-else statment where we are populating an Observable and checking it before out API call. 
   // If it's empty only then call to API is made.
   // If not then data is read from the Observable.
@@ -63,7 +66,36 @@ export class DataService {
       console.log(body)
       return this.http.post('http://localhost:3000/users',body,{'headers':headers});
     }
-  
+
+    userLogin(data:UserSchema){
+      const headers = {'content-type': 'application/json'};
+      const body=JSON.stringify(data);
+      console.log(body)
+      return this.http.post('http://localhost:3000/auth',body,{'headers':headers}).subscribe((res:any)=>{
+        console.log(res);
+        this.router.navigate(['/homepage']);
+            localStorage.setItem('accessToken',res.token);
+            localStorage.setItem('refreshToken',res.refreshToken);
+            this.isUserLoggedIn.next(true);            
+          })
+      }    
+
+    public logout(): void {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');   
+      this.isUserLoggedIn.next(false);
+      this.router.navigate(['/login']);
+    }
+
+    public getLoginStatus(): Observable<boolean> {
+      return this.isUserLoggedIn;
+    }    
+
+   }
+
+
+
+    // Code for firebase integration
   // constructor(public afs: AngularFirestore) {
   //   // this.budgetCollection = afs.collection<BudgetSchema>('budgetData');
   //   // this.budgetData = this.budgetCollection.valueChanges();
@@ -104,8 +136,7 @@ export class DataService {
   // addNewUser(record){
   //   return this.afs.collection('users').add(record);
   // }
-
-  }
+  
 
   
 

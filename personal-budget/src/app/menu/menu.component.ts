@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {GlobalConstants} from '../app.global';
+import { DataService } from '../data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pb-menu',
@@ -8,14 +10,20 @@ import {GlobalConstants} from '../app.global';
 })
 export class MenuComponent implements OnInit {
 
-  public loggedin;
+  public isUserLoggedIn = false;
 
-  constructor() {    
+  constructor(public _dataService: DataService,public router:Router) {    
+    
    }
 
   ngOnInit(): void {
-    this.loggedin = GlobalConstants.loggedStatus; 
-    console.log(this.loggedin);
+    this._dataService.getLoginStatus().subscribe(status => this.isUserLoggedIn = status);
+  }
+
+  logoutUser(){
+    this.isUserLoggedIn = false;
+    this.router.navigate(['/login']);
+    this._dataService.logout();
   }
 
 }

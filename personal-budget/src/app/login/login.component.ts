@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import {GlobalConstants} from '../app.global';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'pb-login',
   templateUrl: './login.component.html',
@@ -13,16 +14,10 @@ export class LoginComponent implements OnInit {
   public userData = [];
   username:string
   password:string
+  isUserLoggedIn = new Subject<boolean>();
 
   constructor(private router: Router,public _dataService: DataService,private toastr: ToastrService) {
-      // this._dataService.getUserData()
-      // .subscribe((res:any)=>{
-      //   res.forEach(element => {
-      //     this.userData.push(element);
-      //   });
-      // });
-      // console.log(this.userData);
-      
+    this.isUserLoggedIn.next(false);      
    }
 
   ngOnInit(): void {
@@ -44,22 +39,34 @@ export class LoginComponent implements OnInit {
     this.toastr.error('Invalid Credentials. Please enter valid credentials','Failure');
   }
 
+  enterAllDetails(){
+    this.toastr.warning('Please enter all the details','Warning');
+  }
+
+  userValidationFailed(){
+    this.toastr.error("Invalid Credentials","Error");
+  }
+
   homepage(){
-    for(let i=0;i<this.userData.length;i++){
-      if(this.username == this.userData[i].username && this.password == this.userData[i].password){
-        console.log("User exists so you can login");
-        this.loginSuccessful();
-        GlobalConstants.loggedStatus = true;
-        console.log(GlobalConstants.loggedStatus);
-        this.router.navigateByUrl('/MenuComponent', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/homepage']);
-        });
-       // this.router.navigate(['/homepage']);        
-        return;
-      }
-    }    
-    console.log("User validation failed");
-    this.loginFailure();
+    let record = {};
+    record['username'] = this.username;
+    record['password'] = this.password;
+    if(!this.username || !this.password){
+      console.log("UserName or password is missing");
+      this.enterAllDetails();
+    }else{
+      this._dataService.userLogin(record);
+          // .subscribe((res:any) =>{
+          //   this.router.navigate(['/homepage']);
+          //   localStorage.setItem('accessToken',res.token);
+          //   localStorage.setItem('refreshToken',res.refreshToken);
+          //   this.isUserLoggedIn.next(true);
+          // },err =>{
+          //   this.username = "";
+          //   this.password = "";
+          //   this.userValidationFailed();
+          // })
+    }
   }
 
 }
