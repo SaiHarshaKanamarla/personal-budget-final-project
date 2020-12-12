@@ -22,5 +22,18 @@ router.post('/', async (req, res) => {
         res.send(user);
     }
 });
+
+
+router.get('/',async (req,res)=>{
+    userModel.find({})
+    .then((data)=>{
+        console.log(data);
+        res.status(200).send(data);
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(500).send();
+    })   
+})
  
 module.exports = router;

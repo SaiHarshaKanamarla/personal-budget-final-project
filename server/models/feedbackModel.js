@@ -2,11 +2,7 @@ const mongoose = require('mongoose');
 
 
 const feedbackSchema = mongoose.Schema({
-    _id:{
-        type: String,
-        required : false,
-        trim : true,        
-    },
+ 
     username :{
         type: String,
         required : true,
@@ -14,8 +10,7 @@ const feedbackSchema = mongoose.Schema({
     },
     email :{
         type : String,
-        required : true,
-        unique:true,
+        required : true,        
         match:[/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,"Invalid Email Format"]        
     },
     description:{
