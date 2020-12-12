@@ -42,7 +42,7 @@ export class SignupComponent implements OnInit {
   }
 
   duplicateUserName(){
-    this.toastr.warning('User already exists. Please proceed to login','Existing User?');
+    this.toastr.warning('User already exists. Please proceed to login. If not set a new username','Existing User?');
   }
 
   createSuccessfull(){
@@ -72,15 +72,19 @@ export class SignupComponent implements OnInit {
     record['username'] = this.username;
     record['password'] = this.password;    
     record['email'] = this.email;
-    
-      console.log("Valid user");
-      // this._dataService.addNewUser(record).then(res =>{
-      //     this.username = "";
-      //     this.password = "";
-      //     this.email = "";
-      //     this.createSuccessfull();
-      //     this.router.navigate(['/login']);
-      // })
+        
+      this._dataService.userSignUp(record)
+        .subscribe(res =>{
+          this.username = "";
+          this.password = "";
+          this.email = "";
+          this.createSuccessfull();
+          this.router.navigate(['/login']);
+
+        },
+        err =>{
+          this.duplicateUserName();
+        })
     }    
 
 }
