@@ -17,7 +17,7 @@ const feedback = require('./routes/feedback');
 
 const feedbackModel = require('./models/feedbackModel');
 const port = 3000;
-
+const accessTokenKey = 'My super secret key';
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
