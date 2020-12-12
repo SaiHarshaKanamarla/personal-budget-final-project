@@ -55,17 +55,7 @@ export class LoginComponent implements OnInit {
       console.log("UserName or password is missing");
       this.enterAllDetails();
     }else{
-      this._dataService.userLogin(record);
-          // .subscribe((res:any) =>{
-          //   this.router.navigate(['/homepage']);
-          //   localStorage.setItem('accessToken',res.token);
-          //   localStorage.setItem('refreshToken',res.refreshToken);
-          //   this.isUserLoggedIn.next(true);
-          // },err =>{
-          //   this.username = "";
-          //   this.password = "";
-          //   this.userValidationFailed();
-          // })
+      this._dataService.userLogin(record)          
     }
   }
 

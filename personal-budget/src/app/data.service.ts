@@ -9,6 +9,8 @@ import { BudgetSchema } from '../app/models/budget';
 import { FeedbackSchema } from './models/feedback';
 import { UserSchema } from './models/users';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { local } from 'd3';
 
 
 @Injectable({
@@ -32,7 +34,7 @@ export class DataService {
   isUserLoggedIn = new Subject<boolean>();
 
 
-  constructor(private http: HttpClient,public router: Router) { }
+  constructor(private http: HttpClient,public router: Router,public toastr:ToastrService) { }
   // An if-else statment where we are populating an Observable and checking it before out API call. 
   // If it's empty only then call to API is made.
   // If not then data is read from the Observable.
@@ -41,6 +43,8 @@ export class DataService {
       if (this.DataObservable) {
         return this.DataObservable;
       } else {
+        const token = localStorage.getItem('jwt');
+        const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
         this.DataObservable = this.http.get('http://localhost:3000/budget').pipe(shareReplay());
         return this.DataObservable;
       }
@@ -67,16 +71,22 @@ export class DataService {
       return this.http.post('http://localhost:3000/users',body,{'headers':headers});
     }
 
+    invaliduser(){
+      this.toastr.error("User does not exist. Please proceed to signup page",'Error');
+    }
+
     userLogin(data:UserSchema){
       const headers = {'content-type': 'application/json'};
       const body=JSON.stringify(data);
       console.log(body)
       return this.http.post('http://localhost:3000/auth',body,{'headers':headers}).subscribe((res:any)=>{
-        console.log(res);
-        this.router.navigate(['/homepage']);
-            localStorage.setItem('accessToken',res.token);
-            localStorage.setItem('refreshToken',res.refreshToken);
-            this.isUserLoggedIn.next(true);            
+        console.log(res);       
+        localStorage.setItem('accessToken',res.token);
+            localStorage.setItem('refreshToken',res.refreshToken);                       
+            this.isUserLoggedIn.next(true); 
+            this.router.navigate(['/homepage']);            
+          },err=>{
+              this.invaliduser();
           })
       }    
 
@@ -90,6 +100,10 @@ export class DataService {
     public getLoginStatus(): Observable<boolean> {
       return this.isUserLoggedIn;
     }    
+
+    verifyTokenPresence(){
+      return !!localStorage.getItem('token');
+    }
 
    }
 

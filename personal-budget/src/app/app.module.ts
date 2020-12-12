@@ -27,7 +27,8 @@ import { HometableComponent } from './hometable/hometable.component';
 import { ChartsModule } from 'ng2-charts';
 import { DualbarComponent } from './dualbar/dualbar.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
-import { AddbudgetComponent } from './addbudget/addbudget.component'
+import { AddbudgetComponent } from './addbudget/addbudget.component';
+import {AuthguardGuard} from './authguard.guard';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import { AddbudgetComponent } from './addbudget/addbudget.component'
       preventDuplicates: true      
     })
   ],
-  providers: [DataService],
+  providers: [DataService,AuthguardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
