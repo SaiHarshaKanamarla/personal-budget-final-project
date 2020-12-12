@@ -58,7 +58,7 @@ import { AddbudgetComponent } from './addbudget/addbudget.component'
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 2000,
+      timeOut: 3000,
       progressBar: true,
       progressAnimation: 'increasing',
       preventDuplicates: true      

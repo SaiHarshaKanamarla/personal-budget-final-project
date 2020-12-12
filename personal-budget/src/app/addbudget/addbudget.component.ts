@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Data } from '@angular/router';
 import { DataService } from '../data.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'pb-addbudget',
@@ -13,9 +14,13 @@ export class AddbudgetComponent implements OnInit {
   maxbudget:number;
   title:string
 
-  constructor(private _dataService:DataService) { }
+  constructor(private _dataService:DataService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
+  }
+
+  expenseAddToast(){
+    this.toastr.success('Expense Successfully Added. Check you homepage','Success');
   }
 
   randomColorGen(){
@@ -35,10 +40,12 @@ export class AddbudgetComponent implements OnInit {
     this._dataService.addBudgetdata(record)
       .subscribe(data =>{
         console.log(data);
+        this.expenseAddToast
         this.budget = null;
         this.maxbudget = null;
         this.title = "";   
         this.locationreload();  
+        this.expenseAddToast();        
       })             
   }
 

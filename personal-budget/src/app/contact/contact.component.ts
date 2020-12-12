@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Data } from '@angular/router';
 import { DataService } from '../data.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'pb-contact',
@@ -15,13 +16,17 @@ export class ContactComponent implements OnInit {
   description:string
 
 
-  constructor(public _dataService: DataService) { }
+  constructor(private _dataService: DataService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
 
   getValues(val){
     console.log(val);
+  }
+
+  successfulFeedbackSent(){
+    this.toastr.success('Feedback Sent Successfully','Success');
   }
 
   sendFeedback(){
@@ -31,13 +36,18 @@ export class ContactComponent implements OnInit {
     record['email'] = this.email;
     record['description'] = this.description;
 
-    // this._dataService.createNewFeedBack(record).then(res => {
-    //   this.username = "";
-    //   this.email = "";
-    //   this.description = "";
-    //   console.log(res);
-    // }).catch(error => {
-    //   console.log(error);
-    // });
+    this._dataService.addFeedbackData(record)
+    .subscribe(data =>{
+      console.log(data);
+      this.username = null;
+      this.email = null;
+      this.description = "";   
+      this.successfulFeedbackSent();
+      //this.locationreload();  
+    })  
+  }
+
+  locationreload() {          
+    location.reload();    
   }
 }

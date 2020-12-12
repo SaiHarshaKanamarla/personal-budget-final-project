@@ -49,6 +49,13 @@ export class DataService {
       console.log(body)
       return this.http.post('http://localhost:3000/budget',body,{'headers':headers});
     }
+
+    addFeedbackData(data:FeedbackSchema){
+      const headers = {'content-type': 'application/json'};
+      const body=JSON.stringify(data);
+      console.log(body)
+      return this.http.post('http://localhost:3000/feedback',body,{'headers':headers});
+    }
   
   // constructor(public afs: AngularFirestore) {
   //   // this.budgetCollection = afs.collection<BudgetSchema>('budgetData');
