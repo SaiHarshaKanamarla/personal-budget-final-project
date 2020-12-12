@@ -37,14 +37,17 @@
         <label for="username">Username: </label>
         <input type="text" class="form-control" [(ngModel)]="username" placeholder="Enter your Username" ngModel name="username" id="username">
     </div>
+    <br>
     <div class="form-group">
-        <label for="email">Email: </label>
+        <label for="email" id="emaillabel">Email: </label>
         <input type="email" class="form-control" [(ngModel)]="email" placeholder="Enter your Email Address" ngModel name="email" id="email">
     </div>
+    <br>
     <div class="form-group">
         <label for="description">Description: </label>
         <input type="text" class="form-control" [(ngModel)]="description" placeholder="Enter your Description here" ngModel name="description" id="description">
     </div>
+    <br>
     <div class="form-group">        
         <button class="btn btn-primary"(click)="sendFeedback()" [disabled]="!username || !email || !description">Send Feedback</button>
     </div>

@@ -39,7 +39,7 @@ export class ContactComponent implements OnInit {
     record['username'] = this.username;
     record['email'] = this.email;
     record['description'] = this.description;
-    if(!this.username || this.email || this.email){
+    if(!this.username || !this.email || !this.email){
       this.emptyDetails();
       return;
     }else{
