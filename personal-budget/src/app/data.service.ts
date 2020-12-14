@@ -107,8 +107,9 @@ export class DataService {
             }             
             if (new Date().valueOf() >= expdate.valueOf()){
               clearInterval(this.timerId);
-              this.router.navigate(['/login']);
-              this.isUserLoggedIn.next(false);
+              //this.router.navigate(['/login']);
+              //this.isUserLoggedIn.next(false);
+              this.logout();
               console.log('clear interval');
       }
           }, 5000);
