@@ -44,15 +44,11 @@ export class DataService {
   // If it's empty only then call to API is made.
   // If not then data is read from the Observable.
   // tslint:disable-next-line: typedef
-    getBudgetData(): Observable<any> {
-      if (this.DataObservable) {
-        return this.DataObservable;
-      } else {
+    getBudgetData(): Observable<any> {      
         const token = localStorage.getItem('jwt');
         const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
         this.DataObservable = this.http.get('http://localhost:3000/budget').pipe(shareReplay());
-        return this.DataObservable;
-      }
+        return this.DataObservable;      
     }
 
     addBudgetdata(data:BudgetSchema){

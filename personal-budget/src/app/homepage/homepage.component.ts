@@ -75,6 +75,8 @@ export class HomepageComponent implements OnInit {
     this.router.navigate(['/addbudget']);
   }
 
-  
+  callNgOnInit(){
+    this.ngOnInit();
+  }
 
 }

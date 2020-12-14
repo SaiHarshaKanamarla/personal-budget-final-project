@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Data, Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
-import { empty } from 'rxjs';
 
 @Component({
   selector: 'pb-addbudget',
@@ -15,7 +14,7 @@ export class AddbudgetComponent implements OnInit {
   maxbudget:number;
   title:string
 
-  constructor(private _dataService:DataService,private toastr: ToastrService,private router:Router) { }
+  constructor(private _dataService:DataService,private toastr: ToastrService,private router:Router,private ngZone:NgZone) { }
 
   ngOnInit(): void {
   }
@@ -59,8 +58,11 @@ export class AddbudgetComponent implements OnInit {
         this.title = "";   
         //this.locationreload();
         this.expenseAddToast(); 
-        this.router.navigate(['/homepage'])
-        
+        this.ngZone.run(() => {
+          console.log("Running ngZone")
+          this.router.navigate(['/homepage']);
+        });
+        //this.router.navigate(['/homepage']);                        
       },
       err => {
         console.log("Same title already exists");
