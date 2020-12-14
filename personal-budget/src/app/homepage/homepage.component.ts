@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js'
 import * as D3 from 'd3';
 import { DataService } from '../data.service';
+import { Router } from '@angular/router';
 
 // interface BudgetSchema{
 //   id: string;
@@ -35,7 +36,7 @@ export class HomepageComponent implements OnInit {
 };
 
 
-  constructor(private _dataService : DataService) { }
+  constructor(private _dataService : DataService,private router:Router) { }
 
   ngOnInit(): void {
   // Making the subscribe call for the first pie chart. Here the value is fetched from data source. 
@@ -69,6 +70,11 @@ export class HomepageComponent implements OnInit {
         data : this.dataSource
     })
 }
+
+  navigateToAddBudget(){
+    this.router.navigate(['/addbudget']);
+  }
+
   
 
 }

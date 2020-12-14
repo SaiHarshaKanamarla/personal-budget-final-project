@@ -34,18 +34,20 @@
         </pb-article>
         
         <pb-article>
-            <h1>Chart</h1>
+            <h1>Budget Distirbution</h1>
             <div>                
                 <canvas id="myChart" width="400" height="400" style="width:350px;height:350px"></canvas>
             </div>
         </pb-article>
 
-        <!-- <article id="d3chart">
-            <h1 style>Budget Allocation</h1>
-            <figure id="pie">
-                <pb-pie></pb-pie>
-            </figure>
-        </article> -->
+        <pb-article>
+            <h1>Maximum Budget Distirbution</h1>
+            <div>                
+                <canvas id="myMaxBudgetChart" width="400" height="400" style="width:350px;height:350px"></canvas>
+                <pb-maxbudgetchart></pb-maxbudgetchart>
+            </div>
+        </pb-article>
+                
 
         <pb-article>
             <h1>Expected Budget v/s Actual Budget</h1>
@@ -64,4 +66,9 @@
 
     </div>
 </div>
-<pb-addbudget></pb-addbudget>
+<div class="container">
+    <div class="row">
+        <h1>Want to add a new expense? Click here</h1>
+        <button (click)="navigateToAddBudget()"></button>
+    </div>
+</div>

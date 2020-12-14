@@ -7,6 +7,8 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { LoginComponent } from './login/login.component';
 import { P404Component } from './p404/p404.component';
 import { SignupComponent } from './signup/signup.component';
+import { DummyComponent } from './dummy/dummy.component';
+import { AddbudgetComponent } from './addbudget/addbudget.component';
 
 const routes: Routes = [
   {
@@ -40,6 +42,14 @@ const routes: Routes = [
   {
     path:'logout',
     component: LoginComponent
+  },
+  {
+    path:'dummy',
+    component: DummyComponent
+  },
+  {
+    path: "addbudget",
+    component: AddbudgetComponent
   },
   {
     path:'**',

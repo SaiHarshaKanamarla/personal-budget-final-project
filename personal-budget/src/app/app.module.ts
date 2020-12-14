@@ -29,6 +29,8 @@ import { DualbarComponent } from './dualbar/dualbar.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { AddbudgetComponent } from './addbudget/addbudget.component';
 import {AuthguardGuard} from './authguard.guard';
+import { MaxbudgetchartComponent } from './maxbudgetchart/maxbudgetchart.component';
+import { DummyComponent } from './dummy/dummy.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import {AuthguardGuard} from './authguard.guard';
     HometableComponent,
     DualbarComponent,
     LineChartComponent,
-    AddbudgetComponent,  ],
+    AddbudgetComponent,
+    MaxbudgetchartComponent,
+    DummyComponent,  ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

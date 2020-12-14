@@ -54,13 +54,13 @@ export class AddbudgetComponent implements OnInit {
     this._dataService.addBudgetdata(record)
       .subscribe(data =>{
         console.log(data);
-        this.expenseAddToast
         this.budget = null;
         this.maxbudget = null;
         this.title = "";   
-        //this.locationreload();  
-        this.router.navigate(['/homepage']);
-        this.expenseAddToast();        
+        //this.locationreload();
+        this.expenseAddToast(); 
+        this.router.navigate(['/homepage'])
+        
       },
       err => {
         console.log("Same title already exists");
@@ -68,11 +68,6 @@ export class AddbudgetComponent implements OnInit {
         this.title = "";
       })             
   }
-}
-
-  
-  // locationreload() {          
-  //     location.reload();    
-  //   }
+}  
 
 }
