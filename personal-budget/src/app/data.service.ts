@@ -47,7 +47,7 @@ export class DataService {
     getBudgetData(): Observable<any> {      
         const token = localStorage.getItem('jwt');
         const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
-        this.DataObservable = this.http.get('http://localhost:3000/budget').pipe(shareReplay());
+        this.DataObservable = this.http.get('http://68.183.139.30:3000/budget').pipe(shareReplay());
         return this.DataObservable;      
     }
 
@@ -55,21 +55,21 @@ export class DataService {
       const headers = {'content-type': 'application/json'};
       const body=JSON.stringify(data);
       console.log(body)
-      return this.http.post('http://localhost:3000/budget',body,{'headers':headers});
+      return this.http.post('http://68.183.139.30:3000/budget',body,{'headers':headers});
     }
 
     addFeedbackData(data:FeedbackSchema){
       const headers = {'content-type': 'application/json'};
       const body=JSON.stringify(data);
       console.log(body)
-      return this.http.post('http://localhost:3000/feedback',body,{'headers':headers});
+      return this.http.post('http://68.183.139.30:3000/feedback',body,{'headers':headers});
     }
 
     userSignUp(data:UserSchema){
       const headers = {'content-type': 'application/json'};
       const body=JSON.stringify(data);
       console.log(body)
-      return this.http.post('http://localhost:3000/users',body,{'headers':headers});
+      return this.http.post('http://68.183.139.30:3000/users',body,{'headers':headers});
     }
 
     invaliduser(){
@@ -80,7 +80,7 @@ export class DataService {
       const headers = {'content-type': 'application/json'};
       const body=JSON.stringify(data);
       console.log(body)
-      return this.http.post('http://localhost:3000/auth',body,{'headers':headers}).subscribe((res:any)=>{
+      return this.http.post('http://68.183.139.30:3000/auth',body,{'headers':headers}).subscribe((res:any)=>{
         console.log(res);       
         this.userRecord['username'] = data.username;
         this.userRecord['password'] = data.password;
