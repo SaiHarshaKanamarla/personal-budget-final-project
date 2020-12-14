@@ -86,7 +86,8 @@ export class DataService {
       return this.http.post('http://localhost:3000/auth',body,{'headers':headers}).subscribe((res:any)=>{
         console.log(res);       
         localStorage.setItem('accessToken',res.token);
-            localStorage.setItem('refreshToken',res.refreshToken);                       
+            localStorage.setItem('refreshToken',res.refreshToken);      
+            localStorage.setItem('exp',res.exp);                 
             this.isUserLoggedIn.next(true); 
             this.router.navigate(['/homepage']);            
             this.setTimer(true);
@@ -96,23 +97,24 @@ export class DataService {
       }    
     
       public setTimer(flag){
+        console.log("Timer set");
         if (flag){
           this.timerId = setInterval(() => {
             const exp = localStorage.getItem('exp');
             const expdate = new Date(0).setUTCSeconds(Number(exp));
             const TokenNotExpired = expdate.valueOf() > new Date().valueOf();
-            const lessThanTwentySecRemaining = expdate.valueOf() - new Date().valueOf() <= 20000;
+            const lessThanTwentySecRemaining = expdate.valueOf() - new Date().valueOf() <= 10000;
+            console.log(lessThanTwentySecRemaining);
             if (TokenNotExpired && lessThanTwentySecRemaining) {            
-              this.isOpenModel.next(true);
-            }             
+              // this.isOpenModel.next(true);
+              alert("This page will logout in 20 seconds");
+            }                         
             if (new Date().valueOf() >= expdate.valueOf()){
-              clearInterval(this.timerId);
-              //this.router.navigate(['/login']);
-              //this.isUserLoggedIn.next(false);
+              clearInterval(this.timerId);           
               this.logout();
               console.log('clear interval');
       }
-          }, 5000);
+          }, 10000);
         } else {
           clearInterval(this.timerId);
         }
@@ -120,7 +122,8 @@ export class DataService {
 
     public logout(): void {
       localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');   
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('exp');   
       this.isUserLoggedIn.next(false);
       this.router.navigate(['/login']);
     }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Data } from '@angular/router';
+import { Data, Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import { empty } from 'rxjs';
@@ -15,7 +15,7 @@ export class AddbudgetComponent implements OnInit {
   maxbudget:number;
   title:string
 
-  constructor(private _dataService:DataService,private toastr: ToastrService) { }
+  constructor(private _dataService:DataService,private toastr: ToastrService,private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -58,7 +58,8 @@ export class AddbudgetComponent implements OnInit {
         this.budget = null;
         this.maxbudget = null;
         this.title = "";   
-        this.locationreload();  
+        //this.locationreload();  
+        this.router.navigate(['/homepage']);
         this.expenseAddToast();        
       },
       err => {
@@ -70,8 +71,8 @@ export class AddbudgetComponent implements OnInit {
 }
 
   
-  locationreload() {          
-      location.reload();    
-    }
+  // locationreload() {          
+  //     location.reload();    
+  //   }
 
 }
