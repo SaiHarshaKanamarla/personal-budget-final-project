@@ -32,9 +32,13 @@ export class DataService {
 
 
   isUserLoggedIn = new Subject<boolean>();
+  timerId: any;
+  isOpenModel = new Subject<boolean>();
 
 
-  constructor(private http: HttpClient,public router: Router,public toastr:ToastrService) { }
+  constructor(private http: HttpClient,public router: Router,public toastr:ToastrService) { 
+    this.isOpenModel.next(false);
+  }
   // An if-else statment where we are populating an Observable and checking it before out API call. 
   // If it's empty only then call to API is made.
   // If not then data is read from the Observable.
@@ -85,10 +89,33 @@ export class DataService {
             localStorage.setItem('refreshToken',res.refreshToken);                       
             this.isUserLoggedIn.next(true); 
             this.router.navigate(['/homepage']);            
+            this.setTimer(true);
           },err=>{
               this.invaliduser();
           })
       }    
+    
+      public setTimer(flag){
+        if (flag){
+          this.timerId = setInterval(() => {
+            const exp = localStorage.getItem('exp');
+            const expdate = new Date(0).setUTCSeconds(Number(exp));
+            const TokenNotExpired = expdate.valueOf() > new Date().valueOf();
+            const lessThanTwentySecRemaining = expdate.valueOf() - new Date().valueOf() <= 20000;
+            if (TokenNotExpired && lessThanTwentySecRemaining) {            
+              this.isOpenModel.next(true);
+            }             
+            if (new Date().valueOf() >= expdate.valueOf()){
+              clearInterval(this.timerId);
+              this.router.navigate(['/login']);
+              this.isUserLoggedIn.next(false);
+              console.log('clear interval');
+      }
+          }, 5000);
+        } else {
+          clearInterval(this.timerId);
+        }
+      }
 
     public logout(): void {
       localStorage.removeItem('accessToken');
