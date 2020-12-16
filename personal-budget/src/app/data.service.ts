@@ -45,24 +45,30 @@ export class DataService {
   // If not then data is read from the Observable.
   // tslint:disable-next-line: typedef
     getBudgetData(): Observable<any> {      
-        const token = localStorage.getItem('jwt');
+        const token = localStorage.getItem('accessToken');    
+        //console.log(token);    
         const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
-        this.DataObservable = this.http.get('http://68.183.139.30:3000/budget').pipe(shareReplay());
+        //this.DataObservable = this.http.get('http://68.183.139.30:3000/budget').pipe(shareReplay());
+        this.DataObservable = this.http.get('http://localhost:3000/budget',{ headers: headers }).pipe(shareReplay());
         return this.DataObservable;      
     }
 
     addBudgetdata(data:BudgetSchema){
-      const headers = {'content-type': 'application/json'};
+      const token = localStorage.getItem('accessToken');
+      const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
       const body=JSON.stringify(data);
       console.log(body)
-      return this.http.post('http://68.183.139.30:3000/budget',body,{'headers':headers});
+      // return this.http.post('http://68.183.139.30:3000/budget',body,{'headers':headers});
+      return this.http.post('http://localhost:3000/budget',body,{'headers':headers});
     }
 
-    addFeedbackData(data:FeedbackSchema){
-      const headers = {'content-type': 'application/json'};
+    addFeedbackData(data:FeedbackSchema){   
+      const token = localStorage.getItem('accessToken');   
+      const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
       const body=JSON.stringify(data);
       console.log(body)
-      return this.http.post('http://68.183.139.30:3000/feedback',body,{'headers':headers});
+      // return this.http.post('http://68.183.139.30:3000/feedback',body,{'headers':headers});
+      return this.http.post('http://localhost:3000/feedback',body,{'headers':headers});
     }
 
     userSignUp(data:UserSchema){
@@ -95,6 +101,10 @@ export class DataService {
               this.invaliduser();
           })
       }    
+
+      successfulLogout(){
+        this.toastr.success("You have logged out successfully","Goodbye!");
+      }
     
       public setTimer(flag){
         console.log("Timer set");
@@ -129,6 +139,7 @@ export class DataService {
           }, 20000);
         } else {
           clearInterval(this.timerId);
+          this.successfulLogout();
         }
       }
 
