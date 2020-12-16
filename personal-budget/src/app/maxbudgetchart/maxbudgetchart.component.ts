@@ -12,6 +12,7 @@ export class MaxbudgetchartComponent implements OnInit {
 
   public dataSource = {
     datasets: [{
+        label:"Maximum Budget",
         data: [],
         backgroundColor : [           
         ]
@@ -20,8 +21,31 @@ export class MaxbudgetchartComponent implements OnInit {
     // These labels appear in the legend and in the tooltips when hovering different arcs
     labels: [
         
-    ]
+    ],
+    color : [
+      { 
+        backgroundColor: 'rgb(128, 0, 0)'
+      }]
   }
+
+  public options = {
+    responsive: true,
+    title: {
+      display: true,
+      position: "top",
+      text: "Maximum Budget Distirbution",
+      fontSize: 18,
+      fontColor: "#111"
+    },
+    legend: {
+      display: true,
+      position: "top",
+      labels: {
+        fontColor: "#333",
+        fontSize: 16
+      }
+    }
+  };
 
   constructor(private _dataService : DataService) { }
 
@@ -41,7 +65,7 @@ export class MaxbudgetchartComponent implements OnInit {
   createChart(){
     var ctx : any = document.getElementById("myMaxBudgetChart")
     var myPieChart = new Chart(ctx,{
-        type: 'pie',
+        type: 'line',
         data : this.dataSource
     })
 }

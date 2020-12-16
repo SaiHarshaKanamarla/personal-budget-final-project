@@ -35,7 +35,7 @@ export class DataService {
   timerId: any;
   isOpenModel = new Subject<boolean>();
   userRecord = {};
-
+  logouthandler = true;
 
   constructor(private http: HttpClient,public router: Router,public toastr:ToastrService) { 
     this.isOpenModel.next(false);
@@ -48,7 +48,7 @@ export class DataService {
         const token = localStorage.getItem('accessToken');    
         //console.log(token);    
         const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
-        this.DataObservable = this.http.get('http://68.183.139.30:3000/budget').pipe(shareReplay());
+        this.DataObservable = this.http.get('http://68.183.139.30:3000/budget',{ headers: headers }).pipe(shareReplay());
         //this.DataObservable = this.http.get('http://localhost:3000/budget',{ headers: headers }).pipe(shareReplay());
         return this.DataObservable;      
     }
@@ -115,31 +115,35 @@ export class DataService {
             const TokenNotExpired = expdate.valueOf() > new Date().valueOf();
             const lessThanTwentySecRemaining = expdate.valueOf() - new Date().valueOf() <= 20000;
             console.log(lessThanTwentySecRemaining);
-            if (TokenNotExpired && lessThanTwentySecRemaining) {                          
+            if (TokenNotExpired && lessThanTwentySecRemaining && this.logouthandler) {                                        
               let message = confirm(
                 'Your session is going to expire in 20 seconds! click OK to extend the session!'
               );
-              if(message){
+              if(message && this.logouthandler){
                 console.log("okay clicked");
                 let record = {};
                 record['username'] = this.userRecord['username']
                 record['password'] = this.userRecord['password'];
                 console.log(JSON.stringify(record));
+                this.logouthandler = true;
                 this.userLogin(record);
               }else{
                 console.log("Cancel clicked. So Session will continue");
                 message = false;
+                this.logouthandler = false;
               }
             }                         
             if (new Date().valueOf() >= expdate.valueOf()){
               clearInterval(this.timerId);           
               this.logout();
+              this.successfulLogout();
               console.log('clear interval');
+              return;
       }
           }, 20000);
         } else {
           clearInterval(this.timerId);
-          this.successfulLogout();
+          //this.successfulLogout();
         }
       }
 
