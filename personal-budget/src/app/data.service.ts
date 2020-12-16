@@ -48,8 +48,8 @@ export class DataService {
         const token = localStorage.getItem('accessToken');    
         //console.log(token);    
         const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
-        //this.DataObservable = this.http.get('http://68.183.139.30:3000/budget').pipe(shareReplay());
-        this.DataObservable = this.http.get('http://localhost:3000/budget',{ headers: headers }).pipe(shareReplay());
+        this.DataObservable = this.http.get('http://68.183.139.30:3000/budget').pipe(shareReplay());
+        //this.DataObservable = this.http.get('http://localhost:3000/budget',{ headers: headers }).pipe(shareReplay());
         return this.DataObservable;      
     }
 
@@ -58,8 +58,8 @@ export class DataService {
       const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
       const body=JSON.stringify(data);
       console.log(body)
-      // return this.http.post('http://68.183.139.30:3000/budget',body,{'headers':headers});
-      return this.http.post('http://localhost:3000/budget',body,{'headers':headers});
+      return this.http.post('http://68.183.139.30:3000/budget',body,{'headers':headers});
+      //return this.http.post('http://localhost:3000/budget',body,{'headers':headers});
     }
 
     addFeedbackData(data:FeedbackSchema){   
@@ -67,8 +67,8 @@ export class DataService {
       const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
       const body=JSON.stringify(data);
       console.log(body)
-      // return this.http.post('http://68.183.139.30:3000/feedback',body,{'headers':headers});
-      return this.http.post('http://localhost:3000/feedback',body,{'headers':headers});
+      return this.http.post('http://68.183.139.30:3000/feedback',body,{'headers':headers});
+      //return this.http.post('http://localhost:3000/feedback',body,{'headers':headers});
     }
 
     userSignUp(data:UserSchema){
