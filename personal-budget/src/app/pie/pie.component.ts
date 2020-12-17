@@ -20,12 +20,13 @@ export class PieComponent implements OnInit {
     // The radius of the pie chart is half the smallest side
     private radius = Math.min(this.width, this.height) / 2 - this.margin;
     private colors;
-
+    public loggedInUserName:any
 
     constructor(public _dataService : DataService, private http: HttpClient) { }
 
     ngOnInit(): void {
-      this._dataService.getBudgetData()
+      this.loggedInUserName = this._dataService.loggedInUserName;
+    this._dataService.getBudgetData(this.loggedInUserName)
       .subscribe((res: any) => {   // making a subscribe call to fetch data.
         console.log(res);
         this.data = res;

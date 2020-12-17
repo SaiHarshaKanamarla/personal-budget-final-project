@@ -40,13 +40,15 @@ export class DualbarComponent implements OnInit {
     console.log(event);
   }
 
+  public loggedInUserName:any;
 
   constructor(private http: HttpClient,public _dataService: DataService) { }
 
   ngOnInit(): void {
     // Making the subscribe call for the first pie chart. Here the value is fetched from data source. 
     //The data.service file has the handling for the API call.
-    this._dataService.getBudgetData()
+    this.loggedInUserName = this._dataService.loggedInUserName;
+    this._dataService.getBudgetData(this.loggedInUserName)
     .subscribe((res: any) => {
       console.log(res[0]);
       for (let i = 0; i < res.length; i++) {

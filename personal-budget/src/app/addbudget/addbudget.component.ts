@@ -44,6 +44,7 @@ export class AddbudgetComponent implements OnInit {
     record['maxbudget'] = this.maxbudget;
     record['title'] = this.title.charAt(0).toUpperCase()+this.title.slice(1);
     record['color'] = this.randomColorGen();
+    record['username'] = this._dataService.loggedInUserName;
 
     if(!this.budget || !this.maxbudget || !this.title){
       this.incompleteDetails();

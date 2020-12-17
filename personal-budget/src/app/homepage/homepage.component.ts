@@ -35,13 +35,15 @@ export class HomepageComponent implements OnInit {
     ]
 };
 
+  public loggedInUserName:any;
 
   constructor(private _dataService : DataService,private router:Router) { }
 
   ngOnInit(): void {
   // Making the subscribe call for the first pie chart. Here the value is fetched from data source. 
   // The data.service file has the handling for the API call.
-  this._dataService.getBudgetData()
+  this.loggedInUserName = this._dataService.loggedInUserName;
+  this._dataService.getBudgetData(this.loggedInUserName)
   .subscribe((res: any) => {
     console.log(res);
     for (let i = 0; i < res.length; i++) {

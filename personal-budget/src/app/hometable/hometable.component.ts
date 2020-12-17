@@ -25,11 +25,14 @@ export class HometableComponent implements OnInit {
 
   data = []
 
+  public loggedInUserName:any
   // constructor(private afs: AngularFirestore) { }
-  constructor(private _dataService: DataService) { }
+  constructor(private _dataService: DataService) {
+    this.loggedInUserName = this._dataService.loggedInUserName;
+   }
 
-  ngOnInit(): void {
-    this._dataService.getBudgetData()
+  ngOnInit(): void {    
+    this._dataService.getBudgetData(this.loggedInUserName)
     .subscribe((res:any)=>{
       this.data = res
       console.log(this.data);

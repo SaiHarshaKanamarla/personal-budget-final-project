@@ -26,10 +26,15 @@ export class LineChartComponent implements OnInit {
     ]
 };
 
-  constructor(private _dataService : DataService) { }
+  public loggedInUserName :any;
+
+  constructor(private _dataService : DataService) { 
+    this.loggedInUserName = this._dataService.loggedInUserName;
+  }
 
   ngOnInit(): void {
-    this._dataService.getBudgetData()
+        
+    this._dataService.getBudgetData(this.loggedInUserName)
     .subscribe((res:any)=>{
       console.log(res);
       for (let i = 0; i < res.length; i++) {

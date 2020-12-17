@@ -36,6 +36,7 @@ export class DataService {
   isOpenModel = new Subject<boolean>();
   userRecord = {};
   logouthandler = true;
+  loggedInUserName : any;
 
   constructor(private http: HttpClient,public router: Router,public toastr:ToastrService) { 
     this.isOpenModel.next(false);
@@ -44,11 +45,11 @@ export class DataService {
   // If it's empty only then call to API is made.
   // If not then data is read from the Observable.
   // tslint:disable-next-line: typedef
-    getBudgetData(): Observable<any> {      
-        const token = localStorage.getItem('accessToken');    
-        //console.log(token);    
-        const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
-        this.DataObservable = this.http.get('http://68.183.139.30:3000/budget',{ headers: headers }).pipe(shareReplay());
+    getBudgetData(username): Observable<any> {      
+        const token = localStorage.getItem('accessToken');            
+        const body=JSON.stringify(username);
+        const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};       
+        this.DataObservable = this.http.get('http://68.183.139.30:3000/budget',{ headers: headers,params:{userid : username }}).pipe(shareReplay());
         //this.DataObservable = this.http.get('http://localhost:3000/budget',{ headers: headers }).pipe(shareReplay());
         return this.DataObservable;      
     }
@@ -91,8 +92,8 @@ export class DataService {
         this.userRecord['username'] = data.username;
         this.userRecord['password'] = data.password;
         console.log("user record is "+JSON.stringify(this.userRecord));
-        localStorage.setItem('accessToken',res.token);
-            localStorage.setItem('refreshToken',res.refreshToken);      
+        this.loggedInUserName = data.username;
+        localStorage.setItem('accessToken',res.token);                
             localStorage.setItem('exp',res.exp);                 
             this.isUserLoggedIn.next(true); 
             this.router.navigate(['/homepage']);            
@@ -114,7 +115,8 @@ export class DataService {
             const expdate = new Date(0).setUTCSeconds(Number(exp));
             const TokenNotExpired = expdate.valueOf() > new Date().valueOf();
             const lessThanTwentySecRemaining = expdate.valueOf() - new Date().valueOf() <= 20000;
-            console.log(lessThanTwentySecRemaining);
+            console.log(lessThanTwentySecRemaining+" "+TokenNotExpired+" "+this.logouthandler);
+
             if (TokenNotExpired && lessThanTwentySecRemaining && this.logouthandler) {                                        
               let message = confirm(
                 'Your session is going to expire in 20 seconds! click OK to extend the session!'
@@ -151,6 +153,7 @@ export class DataService {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('exp');   
+      this.loggedInUserName = "";
       this.isUserLoggedIn.next(false);
       this.router.navigate(['/login']);
     }

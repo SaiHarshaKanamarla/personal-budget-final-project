@@ -47,10 +47,12 @@ export class MaxbudgetchartComponent implements OnInit {
     }
   };
 
+  public loggedInUserName:any;
   constructor(private _dataService : DataService) { }
 
   ngOnInit(): void {
-    this._dataService.getBudgetData()
+    this.loggedInUserName = this._dataService.loggedInUserName;
+    this._dataService.getBudgetData(this.loggedInUserName)
   .subscribe((res: any) => {
     console.log(res);
     for (let i = 0; i < res.length; i++) {
