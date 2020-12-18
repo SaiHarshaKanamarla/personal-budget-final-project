@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule } from '@angular/common/http';
+import {HttpClientModule,HttpClient } from '@angular/common/http';
 import { FormsModule }   from '@angular/forms';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
@@ -28,7 +28,7 @@ import { ChartsModule } from 'ng2-charts';
 import { DualbarComponent } from './dualbar/dualbar.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { AddbudgetComponent } from './addbudget/addbudget.component';
-import {AuthguardGuard} from './authguard.guard';
+// import {AuthguardGuard} from './authguard.guard';
 import { MaxbudgetchartComponent } from './maxbudgetchart/maxbudgetchart.component';
 import { DummyComponent } from './dummy/dummy.component';
 
@@ -69,7 +69,7 @@ import { DummyComponent } from './dummy/dummy.component';
       preventDuplicates: true      
     })
   ],
-  providers: [DataService,AuthguardGuard],
+  providers: [DataService,HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

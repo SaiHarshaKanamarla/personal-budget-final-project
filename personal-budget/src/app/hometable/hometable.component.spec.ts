@@ -19,7 +19,6 @@ describe('HometableComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  
+  
 });

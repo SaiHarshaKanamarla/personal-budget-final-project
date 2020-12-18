@@ -17,9 +17,5 @@ describe('MaxbudgetchartComponent', () => {
     fixture = TestBed.createComponent(MaxbudgetchartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  });  
 });
